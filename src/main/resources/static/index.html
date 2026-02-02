@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CI/CD Pipeline | Learing Website</title>
+</head>
+<body style="margin:0; font-family:Arial, Helvetica, sans-serif; background:linear-gradient(135deg,#0b1220,#0f1b33,#0b1220); color:#eaf1ff;">
+
+  <!-- Top Nav -->
+  <div style="position:sticky; top:0; z-index:10; backdrop-filter: blur(10px); background:rgba(10,16,30,0.7); border-bottom:1px solid rgba(255,255,255,0.12);">
+    <div style="max-width:1100px; margin:auto; padding:14px 18px; display:flex; align-items:center; justify-content:space-between;">
+      <div style="display:flex; gap:10px; align-items:center;">
+        <div style="width:36px; height:36px; border-radius:12px; background:linear-gradient(135deg,#7c3aed,#22c55e); display:flex; align-items:center; justify-content:center; font-weight:700;">CI</div>
+        <div>
+          <div style="font-weight:800; letter-spacing:0.4px;">CI/CD Pipeline</div>
+          <div style="font-size:12px; opacity:0.8;">Advanced Deployment Website (HTML-only)</div>
+        </div>
+      </div>
+
+      <div style="display:flex; gap:14px; font-size:14px;">
+        <a href="#pipeline" style="color:#eaf1ff; text-decoration:none; opacity:0.9;">Pipeline</a>
+        <a href="#tools" style="color:#eaf1ff; text-decoration:none; opacity:0.9;">Tools</a>
+        <a href="#strategies" style="color:#eaf1ff; text-decoration:none; opacity:0.9;">Strategies</a>
+        <a href="#about" style="color:#eaf1ff; text-decoration:none; opacity:0.9;">About</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Hero -->
+  <div style="max-width:1100px; margin:28px auto 0; padding:0 18px;">
+    <div style="border-radius:22px; padding:26px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.12); box-shadow:0 20px 60px rgba(0,0,0,0.35);">
+      <div style="display:flex; flex-wrap:wrap; gap:18px; align-items:center; justify-content:space-between;">
+        <div style="flex:1; min-width:260px;">
+          <div style="display:inline-block; padding:6px 10px; border-radius:999px; background:rgba(34,197,94,0.12); border:1px solid rgba(34,197,94,0.35); color:#a7f3d0; font-size:12px; font-weight:700;">
+            ✅ Production-minded CI/CD (Blue/Green + Health Checks)
+          </div>
+          <h1 style="margin:12px 0 10px; font-size:40px; line-height:1.1;">
+            Build → Test → Deploy <span style="color:#93c5fd;">Automatically</span>
+          </h1>
+          <p style="margin:0; max-width:640px; opacity:0.9; font-size:16px; line-height:1.6;">
+            This page explains an advanced CI/CD pipeline using <b>Jenkins</b>, <b>Git</b>, <b>Maven</b>, and
+            <b>Blue/Green deployment</b> behind Nginx. Designed as a clean, modern website using <b>HTML only</b>.
+          </p>
+
+          <div style="margin-top:16px; display:flex; gap:12px; flex-wrap:wrap;">
+            <a href="#pipeline" style="text-decoration:none; color:#0b1220; background:linear-gradient(135deg,#60a5fa,#22c55e); padding:10px 14px; border-radius:14px; font-weight:800; display:inline-block;">
+              Explore Pipeline →
+            </a>
+            <a href="#strategies" style="text-decoration:none; color:#eaf1ff; background:rgba(255,255,255,0.08); padding:10px 14px; border-radius:14px; font-weight:700; border:1px solid rgba(255,255,255,0.14); display:inline-block;">
+              Deployment Strategy
+            </a>
+          </div>
+
+          <div style="margin-top:18px; display:flex; gap:10px; flex-wrap:wrap;">
+            <div style="padding:10px 12px; border-radius:16px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.12);">
+              <div style="font-size:12px; opacity:0.8;">Repo</div>
+              <div style="font-weight:800;">GitHub / Git</div>
+            </div>
+            <div style="padding:10px 12px; border-radius:16px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.12);">
+              <div style="font-size:12px; opacity:0.8;">Build</div>
+              <div style="font-weight:800;">Maven (Jar)</div>
+            </div>
+            <div style="padding:10px 12px; border-radius:16px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.12);">
+              <div style="font-size:12px; opacity:0.8;">Deploy</div>
+              <div style="font-weight:800;">SSH + Nginx</div>
+            </div>
+          </div>
+        </div>
+
+        <div style="flex:0.9; min-width:260px;">
+          <div style="border-radius:22px; padding:18px; background:linear-gradient(135deg, rgba(124,58,237,0.18), rgba(34,197,94,0.12)); border:1px solid rgba(255,255,255,0.14);">
+            <div style="display:flex; justify-content:space-between; gap:10px; align-items:flex-start;">
+              <div>
+                <div style="font-size:12px; opacity:0.8;">Live Status</div>
+                <div style="font-size:20px; font-weight:900;">Pipeline Healthy</div>
+              </div>
+              <div style="padding:6px 10px; border-radius:999px; background:rgba(34,197,94,0.18); border:1px solid rgba(34,197,94,0.35); font-weight:800; color:#a7f3d0; font-size:12px;">
+                ● OK
+              </div>
+            </div>
+
+            <div style="margin-top:14px; border-radius:18px; background:rgba(10,16,30,0.55); border:1px solid rgba(255,255,255,0.12); padding:14px;">
+              <div style="font-weight:900;">Quick Highlights</div>
+              <ul style="margin:10px 0 0; padding-left:18px; line-height:1.7; opacity:0.92;">
+                <li>Auto build from Git commit</li>
+                <li>Unit tests + packaging</li>
+                <li>Blue/Green switch on success</li>
+                <li>Rollback if health check fails</li>
+              </ul>
+            </div>
+
+            <div style="margin-top:14px; display:flex; gap:10px; flex-wrap:wrap;">
+              <div style="flex:1; min-width:120px; padding:12px; border-radius:18px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.12);">
+                <div style="font-size:12px; opacity:0.8;">Active Port</div>
+                <div style="font-weight:900; font-size:18px;">8087</div>
+              </div>
+              <div style="flex:1; min-width:120px; padding:12px; border-radius:18px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.12);">
+                <div style="font-size:12px; opacity:0.8;">Standby</div>
+                <div style="font-weight:900; font-size:18px;">8086</div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Pipeline Section -->
+  <div id="pipeline" style="max-width:1100px; margin:22px auto 0; padding:0 18px;">
+    <h2 style="margin:20px 0 10px; font-size:28px;">🚀 CI/CD Pipeline Flow</h2>
+    <p style="margin:0 0 14px; opacity:0.9; line-height:1.7;">
+      A practical pipeline that matches real-world DevOps: from code commit to safe deployment with verification.
+    </p>
+
+    <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(230px, 1fr)); gap:14px;">
+      <div style="border-radius:18px; padding:16px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.12);">
+        <div style="font-weight:900;">1) Source</div>
+        <div style="margin-top:6px; opacity:0.9; line-height:1.6;">
+          Developers push code to <b>Git</b>. Jenkins checks out the repo using webhook or polling.
+        </div>
+      </div>
+
+      <div style="border-radius:18px; padding:16px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.12);">
+        <div style="font-weight:900;">2) Build</div>
+        <div style="margin-top:6px; opacity:0.9; line-height:1.6;">
+          Maven compiles & packages the app into a <b>JAR</b> (or WAR). Artifacts are produced per commit.
+        </div>
+      </div>
+
+      <div style="border-radius:18px; padding:16px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.12);">
+        <div style="font-weight:900;">3) Test</div>
+        <div style="margin-top:6px; opacity:0.9; line-height:1.6;">
+          Automated tests run. If tests fail, pipeline stops and deployment is blocked.
+        </div>
+      </div>
+
+      <div style="border-radius:18px; padding:16px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.12);">
+        <div style="font-weight:900;">4) Deploy</div>
+        <div style="margin-top:6px; opacity:0.9; line-height:1.6;">
+          Jenkins connects via <b>SSH</b> to the server, uploads the JAR and starts the service.
+        </div>
+      </div>
+
+      <div style="border-radius:18px; padding:16px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.12);">
+        <div style="font-weight:900;">5) Verify</div>
+        <div style="margin-top:6px; opacity:0.9; line-height:1.6;">
+          Health check hits <code style="background:rgba(0,0,0,0.35); padding:2px 6px; border-radius:8px;">/actuator/health</code>
+          to confirm service is running properly.
+        </div>
+      </div>
+
+      <div style="border-radius:18px; padding:16px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.12);">
+        <div style="font-weight:900;">6) Switch</div>
+        <div style="margin-top:6px; opacity:0.9; line-height:1.6;">
+          Nginx routes traffic to the new port. If anything breaks, rollback to the previous port.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tools Section -->
+  <div id="tools" style="max-width:1100px; margin:22px auto 0; padding:0 18px;">
+    <h2 style="margin:20px 0 10px; font-size:28px;">🧰 Tools Used</h2>
+    <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(240px, 1fr)); gap:14px;">
+      <div style="border-radius:18px; padding:16px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.12);">
+        <div style="font-weight:900;">Jenkins</div>
+        <div style="margin-top:6px; opacity:0.9; line-height:1.6;">
+          Orchestrates the pipeline stages with builds, tests, and deployments.
+        </div>
+      </div>
+      <div style="border-radius:18px; padding:16px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.12);">
+        <div style="font-weight:900;">Git + GitHub</div>
+        <div style="margin-top:6px; opacity:0.9; line-height:1.6;">
+          Source control. Every commit is a potential release candidate.
+        </div>
+      </div>
+      <div style="border-radius:18px; padding:16px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.12);">
+        <div style="font-weight:900;">Maven</div>
+        <div style="margin-top:6px; opacity:0.9; line-height:1.6;">
+          Build tool to compile, test, and package the Spring Boot application.
+        </div>
+      </div>
+      <div style="border-radius:18px; padding:16px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.12);">
+        <div style="font-weight:900;">Nginx</div>
+        <div style="margin-top:6px; opacity:0.9; line-height:1.6;">
+          Reverse proxy that directs traffic to the active (Blue/Green) port.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Strategies Section -->
+  <div id="strategies" style="max-width:1100px; margin:22px auto 0; padding:0 18px;">
+    <h2 style="margin:20px 0 10px; font-size:28px;">Blue/Green Deployment Strategy</h2>
+
+    <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:14px;">
+      <div style="border-radius:18px; padding:16px; background:rgba(99,102,241,0.10); border:1px solid rgba(99,102,241,0.25);">
+        <div style="font-weight:900;">Blue/Green</div>
+        <div style="margin-top:6px; opacity:0.95; line-height:1.7;">
+          Run two versions side-by-side: <b>Blue (live)</b> and <b>Green (new)</b>. Deploy to standby, verify,
+          then switch traffic.
+        </div>
+        <div style="margin-top:10px; padding:12px; border-radius:14px; background:rgba(10,16,30,0.55); border:1px solid rgba(255,255,255,0.12);">
+          <div style="font-size:13px; opacity:0.9;">
+				Zero-downtime releases<br/>
+				Fast rollback<br/>
+				Safer deployments
+          </div>
+        </div>
+      </div>
+
+      <div style="border-radius:18px; padding:16px; background:rgba(34,197,94,0.10); border:1px solid rgba(34,197,94,0.25);">
+        <div style="font-weight:900;">Health Checks</div>
+        <div style="margin-top:6px; opacity:0.95; line-height:1.7;">
+          After starting the service, the pipeline verifies it using an endpoint like:
+          <code style="background:rgba(0,0,0,0.35); padding:2px 6px; border-radius:8px;">/actuator/health</code>
+        </div>
+        <div style="margin-top:10px; padding:12px; border-radius:14px; background:rgba(10,16,30,0.55); border:1px solid rgba(255,255,255,0.12);">
+          <div style="font-size:13px; opacity:0.9;">
+				Prevents broken releases<br/>
+				Confirms real readiness<br/>
+				Automates rollback trigger
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Jenkinsfile Preview (Static) -->
+    <div style="margin-top:14px; border-radius:18px; padding:16px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.12); overflow:auto;">
+      <div style="display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap;">
+        <div style="font-weight:900;">📄 Example Jenkinsfile (Preview)</div>
+        <div style="font-size:12px; opacity:0.8;">(Static display — no JavaScript used)</div>
+      </div>
+
+      <pre style="margin:12px 0 0; white-space:pre; font-size:13px; line-height:1.55; background:rgba(0,0,0,0.35); padding:14px; border-radius:14px; border:1px solid rgba(255,255,255,0.10);">
+pipeline {
+  agent any
+  stages {
+    stage('Checkout') { steps { git 'https://github.com/your-repo.git' } }
+    stage('Build')    { steps { sh 'mvn -B clean package' } }
+    stage('Test')     { steps { sh 'mvn -B test' } }
+    stage('Deploy')   { steps { sh './deploy-blue-green.sh' } }
+    stage('Verify')   { steps { sh 'curl -f http://server:8087/actuator/health' } }
+  }
+}
+      </pre>
+    </div>
+  </div>
+
+  <!-- About -->
+  <div id="about" style="max-width:1100px; margin:22px auto; padding:0 18px;">
+    <div style="border-radius:22px; padding:20px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.12);">
+      <h2 style="margin:0 0 10px; font-size:28px;">👤 About This Website</h2>
+      <p style="margin:0; opacity:0.92; line-height:1.8;">
+        This is an HTML-only design that looks like a modern DevOps landing page.
+        If you want, I can also create a second page like <b>pipeline.html</b> and link them together (still HTML only),
+        or make it focused on your exact project (8086/8087 + Nginx + SSH deploy + rollback).
+      </p>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div style="margin-top:24px; padding:18px; border-top:1px solid rgba(255,255,255,0.12); background:rgba(10,16,30,0.55);">
+    <div style="max-width:1100px; margin:auto; padding:0 18px; display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px;">
+      <div style="opacity:0.85;">© 2026 CI/CD Pipeline Website • HTML Only</div>
+      <div style="opacity:0.85;">Made for DevOps learning & demo 🚀</div>
+    </div>
+  </div>
+
+</body>
+</html>
