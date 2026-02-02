@@ -5,13 +5,14 @@ pipeline {
     DEPLOY_HOST = "192.168.1.5"
     DEPLOY_USER = "deploy"
     DEPLOY_DIR  = "/opt/hello-webapp/releases"
-    LOG_FILE    = "/opt/hello-webapp/logs/app-8086.log"
-    APP_PORT    = "8086"
   }
 
   stages {
+
     stage('Checkout') {
-      steps { checkout scm }
+      steps {
+        checkout scm
+      }
     }
 
     stage('Build') {
@@ -24,45 +25,89 @@ pipeline {
       }
     }
 
-    stage('Deploy via SSH') {
+    stage('Deploy Blue/Green + Health + Switch') {
       steps {
         sh '''
           set -e
 
           JAR=$(ls target/*.jar | head -n 1)
           BASENAME=$(basename "$JAR")
-          echo "Deploying $BASENAME to ${DEPLOY_USER}@${DEPLOY_HOST}:${DEPLOY_DIR}"
-
-          # Ensure dirs exist on deploy server
-          ssh -o StrictHostKeyChecking=no ${DEPLOY_USER}@${DEPLOY_HOST} "mkdir -p ${DEPLOY_DIR} /opt/hello-webapp/logs"
+          echo "Deploying $BASENAME using Blue/Green"
 
           # Copy jar to deploy server
+          ssh -o StrictHostKeyChecking=no ${DEPLOY_USER}@${DEPLOY_HOST} "mkdir -p ${DEPLOY_DIR} /opt/hello-webapp/logs"
           scp -o StrictHostKeyChecking=no "$JAR" ${DEPLOY_USER}@${DEPLOY_HOST}:${DEPLOY_DIR}/
 
-          # Run stop/start logic on the DEPLOY SERVER (no local expansion)
+          # Run blue/green logic ON deploy server
           ssh -o StrictHostKeyChecking=no ${DEPLOY_USER}@${DEPLOY_HOST} bash -s <<'REMOTE'
             set -e
 
-            APP_PORT="8086"
             DEPLOY_DIR="/opt/hello-webapp/releases"
-            LOG_FILE="/opt/hello-webapp/logs/app-8086.log"
+            LOG_DIR="/opt/hello-webapp/logs"
+            UPSTREAM_LINK="/etc/nginx/conf.d/hello_upstream.conf"
+            BLUE_CONF="/etc/nginx/conf.d/upstreams/hello_upstream_blue.conf"
+            GREEN_CONF="/etc/nginx/conf.d/upstreams/hello_upstream_green.conf"
 
-            # pick latest jar in releases (the one we just copied)
-            BASENAME=$(ls -t "$DEPLOY_DIR"/*.jar | head -n 1 | xargs -n1 basename)
+            BLUE_PORT=8086
+            GREEN_PORT=8087
 
-            PID=$(lsof -ti tcp:${APP_PORT} || true)
-            if [ -n "$PID" ]; then
-              echo "Stopping PID $PID on port ${APP_PORT}"
-              kill "$PID"
-              sleep 2
+            # Detect which upstream is active
+            ACTIVE_CONF=$(readlink -f "$UPSTREAM_LINK" || true)
+
+            if [ "$ACTIVE_CONF" = "$BLUE_CONF" ]; then
+              ACTIVE_PORT=$BLUE_PORT
+              TARGET_PORT=$GREEN_PORT
+              TARGET_CONF=$GREEN_CONF
+              TARGET_COLOR="GREEN"
             else
-              echo "No process on port ${APP_PORT}"
+              ACTIVE_PORT=$GREEN_PORT
+              TARGET_PORT=$BLUE_PORT
+              TARGET_CONF=$BLUE_CONF
+              TARGET_COLOR="BLUE"
             fi
 
-            echo "Starting ${BASENAME} on port ${APP_PORT}"
-            nohup java -jar "${DEPLOY_DIR}/${BASENAME}" --server.port=${APP_PORT} > "${LOG_FILE}" 2>&1 &
-            sleep 3
-            echo "Started. Log: ${LOG_FILE}"
+            echo "Active port: $ACTIVE_PORT"
+            echo "Target port: $TARGET_PORT ($TARGET_COLOR)"
+
+            # Latest jar we just copied
+            JAR_PATH=$(ls -t "$DEPLOY_DIR"/*.jar | head -n 1)
+            LOG_FILE="$LOG_DIR/app-$TARGET_PORT.log"
+
+            # Stop anything on target port
+            PID=$(lsof -ti tcp:$TARGET_PORT || true)
+            if [ -n "$PID" ]; then
+              echo "Stopping existing process on $TARGET_PORT (PID $PID)"
+              kill "$PID"
+              sleep 2
+            fi
+
+            # Start new version on target port
+            echo "Starting new version on $TARGET_PORT"
+            nohup java -jar "$JAR_PATH" --server.port=$TARGET_PORT > "$LOG_FILE" 2>&1 &
+            sleep 6
+
+            # Health check (Rollback if fails)
+            HEALTH=$(curl -s http://127.0.0.1:$TARGET_PORT/actuator/health || true)
+            echo "Health response: $HEALTH"
+
+            if echo "$HEALTH" | grep -q '"status":"UP"'; then
+              echo "Health OK ✅ switching traffic to $TARGET_COLOR"
+
+              # Switch nginx upstream + reload
+              sudo ln -sf "$TARGET_CONF" "$UPSTREAM_LINK"
+              sudo nginx -t
+              sudo systemctl reload nginx
+
+              echo "Switched traffic to $TARGET_COLOR ($TARGET_PORT)"
+            else
+              echo "Health FAILED ❌ rolling back (keeping $ACTIVE_PORT live)"
+              # Kill the new process on target port
+              NEWPID=$(lsof -ti tcp:$TARGET_PORT || true)
+              if [ -n "$NEWPID" ]; then
+                kill "$NEWPID" || true
+              fi
+              exit 1
+            fi
 REMOTE
         '''
       }
