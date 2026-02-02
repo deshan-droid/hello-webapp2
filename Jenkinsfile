@@ -38,7 +38,7 @@ pipeline {
           # Copy jar
           scp -o StrictHostKeyChecking=no "$JAR" ${DEPLOY_USER}@${DEPLOY_HOST}:${DEPLOY_DIR}/
 
-          # Stop any old instance on APP_PORT and start new
+          # Stop old instance on deploy server ONLY if something is listening on APP_PORT
           ssh -o StrictHostKeyChecking=no ${DEPLOY_USER}@${DEPLOY_HOST} "
             set -e
             PID=\$(lsof -ti tcp:${APP_PORT} || true)
@@ -46,6 +46,8 @@ pipeline {
               echo \"Stopping PID \$PID on port ${APP_PORT}\"
               kill \$PID
               sleep 2
+            else
+              echo \"No process on port ${APP_PORT}\"
             fi
 
             echo \"Starting ${BASENAME} on port ${APP_PORT}\"
