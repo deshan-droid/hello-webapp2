@@ -84,13 +84,21 @@ pipeline {
             # Start new version on target port
             echo "Starting new version on $TARGET_PORT"
             nohup java -jar "$JAR_PATH" --server.port=$TARGET_PORT > "$LOG_FILE" 2>&1 &
-            sleep 6
+          
+		 echo "Waiting for app to become healthy on $TARGET_PORT..."
+		HEALTH=""
+		for i in $(seq 1 20); do
+  HEALTH=$(curl -s http://127.0.0.1:$TARGET_PORT/actuator/health || true)
+  if echo "$HEALTH" | grep -q '"status":"UP"'; then
+   break
+ fi
+ sleep 2
+		done
 
-            # Health check (Rollback if fails)
-            HEALTH=$(curl -s http://127.0.0.1:$TARGET_PORT/actuator/health || true)
-            echo "Health response: $HEALTH"
+		echo "Health response: $HEALTH"
 
-            if echo "$HEALTH" | grep -q '"status":"UP"'; then
+		if echo "$HEALTH" | grep -q '"status":"UP"'; then
+
               echo "Health OK ✅ switching traffic to $TARGET_COLOR"
 
               # Switch nginx upstream + reload
