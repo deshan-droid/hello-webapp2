@@ -52,7 +52,8 @@ pipeline {
             GREEN_PORT=8087
 
             # Detect which upstream is active
-            ACTIVE_CONF=$(readlink -f "$UPSTREAM_LINK" || true)
+            ACTIVE_CONF=$(readlink -f "$UPSTREAM_LINK" 2>/dev/null || true)
+	    echo "Active upstream file: $ACTIVE_CONF"
 
             if [ "$ACTIVE_CONF" = "$BLUE_CONF" ]; then
               ACTIVE_PORT=$BLUE_PORT
@@ -84,7 +85,7 @@ pipeline {
             # Start new version on target port
             echo "Starting new version on $TARGET_PORT"
             nohup java -jar "$JAR_PATH" --server.port=$TARGET_PORT > "$LOG_FILE" 2>&1 &
-          
+            sleep 2
 		 echo "Waiting for app to become healthy on $TARGET_PORT..."
 		HEALTH=""
 		for i in $(seq 1 20); do
