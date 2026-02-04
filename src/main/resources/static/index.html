@@ -1,274 +1,602 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="en" data-theme="dark">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CI/CD Pipeline | Learing Website</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="theme-color" content="#0b0f19" />
+  <meta name="description" content="Deshan Herath — DevOps Engineer | Cloud & Automation Enthusiast" />
+
+  <!-- ✅ EDIT HERE: Title shown on browser tab -->
+  <title>Deshan Herath • DevOps Engineer</title>
+
+  <!-- Google Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome (icons) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="./styles.css" />
 </head>
-<body style="margin:0; font-family:Arial, Helvetica, sans-serif; background:linear-gradient(135deg,#0b1220,#0f1b33,#0b1220); color:#eaf1ff;">
 
-  <!-- Top Nav -->
-  <div style="position:sticky; top:0; z-index:10; backdrop-filter: blur(10px); background:rgba(10,16,30,0.7); border-bottom:1px solid rgba(255,255,255,0.12);">
-    <div style="max-width:1100px; margin:auto; padding:14px 18px; display:flex; align-items:center; justify-content:space-between;">
-      <div style="display:flex; gap:10px; align-items:center;">
-        <div style="width:36px; height:36px; border-radius:12px; background:linear-gradient(135deg,#7c3aed,#22c55e); display:flex; align-items:center; justify-content:center; font-weight:700;">CI</div>
-        <div>
-          <div style="font-weight:800; letter-spacing:0.4px;">CI/CD Pipeline</div>
-          <div style="font-size:12px; opacity:0.8;">Advanced Deployment Website (HTML-only)</div>
-        </div>
-      </div>
-
-      <div style="display:flex; gap:14px; font-size:14px;">
-        <a href="#pipeline" style="color:#eaf1ff; text-decoration:none; opacity:0.9;">Pipeline</a>
-        <a href="#tools" style="color:#eaf1ff; text-decoration:none; opacity:0.9;">Tools</a>
-        <a href="#strategies" style="color:#eaf1ff; text-decoration:none; opacity:0.9;">Strategies</a>
-        <a href="#about" style="color:#eaf1ff; text-decoration:none; opacity:0.9;">About</a>
-      </div>
-    </div>
+<body>
+  <!-- Background decor -->
+  <div class="bg" aria-hidden="true">
+    <div class="bg-blob b1"></div>
+    <div class="bg-blob b2"></div>
+    <div class="bg-grid"></div>
   </div>
 
-  <!-- Hero -->
-  <div style="max-width:1100px; margin:28px auto 0; padding:0 18px;">
-    <div style="border-radius:22px; padding:26px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.12); box-shadow:0 20px 60px rgba(0,0,0,0.35);">
-      <div style="display:flex; flex-wrap:wrap; gap:18px; align-items:center; justify-content:space-between;">
-        <div style="flex:1; min-width:260px;">
-          <div style="display:inline-block; padding:6px 10px; border-radius:999px; background:rgba(34,197,94,0.12); border:1px solid rgba(34,197,94,0.35); color:#a7f3d0; font-size:12px; font-weight:700;">
-            ✅ Production-minded CI/CD (Blue/Green + Health Checks)
+  <!-- Toast -->
+  <div class="toast" id="toast" role="status" aria-live="polite" aria-atomic="true"></div>
+
+  <!-- Scroll-to-top -->
+  <button class="to-top" id="toTop" aria-label="Scroll to top">
+    <i class="fa-solid fa-arrow-up"></i>
+  </button>
+
+  <!-- Header -->
+  <header class="header" id="header">
+    <nav class="nav container" aria-label="Primary navigation">
+      <a class="brand" href="#home" aria-label="Go to Home">
+        <span class="brand__mark" aria-hidden="true">DH</span>
+        <!-- ✅ EDIT HERE: Brand name -->
+        <span class="brand__name">Deshan Herath</span>
+      </a>
+
+      <button class="nav__toggle icon-btn" id="navToggle" type="button" aria-label="Toggle menu" aria-expanded="false">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+
+      <div class="nav__panel" id="navPanel">
+        <div class="nav__links" role="navigation">
+          <a class="nav__link active" href="#home">Home</a>
+          <a class="nav__link" href="#about">About</a>
+          <a class="nav__link" href="#skills">Skills</a>
+          <a class="nav__link" href="#projects">Projects</a>
+          <a class="nav__link" href="#experience">Experience</a>
+          <a class="nav__link" href="#contact">Contact</a>
+        </div>
+
+        <div class="nav__actions">
+          <button class="icon-btn" id="themeToggle" type="button" aria-label="Toggle theme">
+            <i class="fa-solid fa-moon"></i>
+          </button>
+          <a class="btn btn--sm btn--ghost ripple" href="#projects">
+            <i class="fa-solid fa-bolt"></i> View Projects
+          </a>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <!-- HERO -->
+    <section class="section hero" id="home">
+      <div class="container hero__grid">
+        <div class="hero__left">
+          <div class="kicker">
+            <span class="pill"><i class="fa-solid fa-location-dot"></i> Sri Lanka</span>
+            <span class="pill pill--soft"><i class="fa-solid fa-shield-halved"></i> Banking Ops • Production</span>
           </div>
-          <h1 style="margin:12px 0 10px; font-size:40px; line-height:1.1;">
-            Build → Test → Deploy <span style="color:#93c5fd;">Automatically</span>
-          </h1>
-          <p style="margin:0; max-width:640px; opacity:0.9; font-size:16px; line-height:1.6;">
-            This page explains an advanced CI/CD pipeline using <b>Jenkins</b>, <b>Git</b>, <b>Maven</b>, and
-            <b>Blue/Green deployment</b> behind Nginx. Designed as a clean, modern website using <b>HTML only</b>.
+
+          <!-- ✅ EDIT HERE: Main heading + headline -->
+          <h1 class="hero__title">Deshan Herath</h1>
+          <p class="hero__headline">DevOps Engineer <span class="muted">|</span> Cloud & Automation Enthusiast</p>
+
+          <p class="hero__intro">
+            I build <span class="accent">reliable CI/CD</span>, automate deployments, and keep production systems stable —
+            with a focus on <span class="accent">zero-downtime releases</span> and clean operations.
           </p>
 
-          <div style="margin-top:16px; display:flex; gap:12px; flex-wrap:wrap;">
-            <a href="#pipeline" style="text-decoration:none; color:#0b1220; background:linear-gradient(135deg,#60a5fa,#22c55e); padding:10px 14px; border-radius:14px; font-weight:800; display:inline-block;">
-              Explore Pipeline →
+		
+          <div class="hero__type" aria-label="Rotating keywords">
+            <span class="muted">Focus:</span>
+            <span class="typewriter" id="typewriter"></span>
+            <span class="type-caret" aria-hidden="true"></span>
+          </div>
+
+          <div class="hero__cta">
+            <a class="btn btn--primary ripple" href="#projects">
+              <i class="fa-solid fa-bolt"></i> View Projects
             </a>
-            <a href="#strategies" style="text-decoration:none; color:#eaf1ff; background:rgba(255,255,255,0.08); padding:10px 14px; border-radius:14px; font-weight:700; border:1px solid rgba(255,255,255,0.14); display:inline-block;">
-              Deployment Strategy
+
+            <!-- ✅ EDIT HERE: CV -->
+            <!-- Option A (recommended): Put CV file in same folder, name it "Deshan-Herath-CV.pdf" then set href="./Deshan-Herath-CV.pdf" -->
+            <!-- Option B: Replace href with your Google Drive/OneDrive CV link -->
+            <a class="btn btn--ghost ripple" href="https://1drv.ms/b/c/064689B258A91146/IQDo9qxq3-W-QbywASiH5_9rAWXYoM7GAMydTGbj5xztOZU?e=Pxv9fh" id="cvBtn">
+              <i class="fa-solid fa-file-arrow-down"></i> Download CV
+            </a>
+
+            <a class="btn btn--soft ripple" href="#contact">
+              <i class="fa-solid fa-paper-plane"></i> Contact
             </a>
           </div>
 
-          <div style="margin-top:18px; display:flex; gap:10px; flex-wrap:wrap;">
-            <div style="padding:10px 12px; border-radius:16px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.12);">
-              <div style="font-size:12px; opacity:0.8;">Repo</div>
-              <div style="font-weight:800;">GitHub / Git</div>
+          <!-- ✅ EDIT HERE: Social links -->
+          <div class="social">
+            <a class="social__link" href="https://github.com/deshan-droid" target="_blank" rel="noreferrer" aria-label="GitHub">
+              <i class="fa-brands fa-github"></i>
+            </a>
+            <a class="social__link" href="https://www.linkedin.com/in/deshan-herath-035a7a192/" target="_blank" rel="noreferrer" aria-label="LinkedIn">
+              <i class="fa-brands fa-linkedin"></i>
+            </a>
+            <a class="social__link" href="https://www.youtube.com/@deshbandara" target="_blank" rel="noreferrer" aria-label="YouTube">
+              <i class="fa-brands fa-youtube"></i>
+            </a>
+            <a class="social__link" href="https://www.tiktok.com/@desh.music_?_r=1&_t=ZS-93e4AUqGsVd" target="_blank" rel="noreferrer" aria-label="TikTok">
+              <i class="fa-brands fa-tiktok"></i>
+            </a>
+          </div>
+
+          <div class="hero__stats">
+            <div class="stat glass">
+              <div class="stat__num">Zero-downtime</div>
+              <div class="stat__label">Blue/Green deployments</div>
             </div>
-            <div style="padding:10px 12px; border-radius:16px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.12);">
-              <div style="font-size:12px; opacity:0.8;">Build</div>
-              <div style="font-weight:800;">Maven (Jar)</div>
+            <div class="stat glass">
+              <div class="stat__num">Pipeline-as-Code</div>
+              <div class="stat__label">Jenkins CI/CD</div>
             </div>
-            <div style="padding:10px 12px; border-radius:16px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.12);">
-              <div style="font-size:12px; opacity:0.8;">Deploy</div>
-              <div style="font-weight:800;">SSH + Nginx</div>
+            <div class="stat glass">
+              <div class="stat__num">Ops-ready</div>
+              <div class="stat__label">Nginx + systemd</div>
             </div>
           </div>
         </div>
 
-        <div style="flex:0.9; min-width:260px;">
-          <div style="border-radius:22px; padding:18px; background:linear-gradient(135deg, rgba(124,58,237,0.18), rgba(34,197,94,0.12)); border:1px solid rgba(255,255,255,0.14);">
-            <div style="display:flex; justify-content:space-between; gap:10px; align-items:flex-start;">
-              <div>
-                <div style="font-size:12px; opacity:0.8;">Live Status</div>
-                <div style="font-size:20px; font-weight:900;">Pipeline Healthy</div>
-              </div>
-              <div style="padding:6px 10px; border-radius:999px; background:rgba(34,197,94,0.18); border:1px solid rgba(34,197,94,0.35); font-weight:800; color:#a7f3d0; font-size:12px;">
-                ● OK
-              </div>
+        <div class="hero__right">
+		          <!-- Profile Photo -->
+          <div class="profile glass">
+            <div class="profile__img">
+              <!-- Replace src with your real photo path -->
+              <img src="/home/deshan/hello-webapp-clean/src/main/resources/static/assets/img/profile.jpeg" alt="Deshan Herath profile photo" />
             </div>
-
-            <div style="margin-top:14px; border-radius:18px; background:rgba(10,16,30,0.55); border:1px solid rgba(255,255,255,0.12); padding:14px;">
-              <div style="font-weight:900;">Quick Highlights</div>
-              <ul style="margin:10px 0 0; padding-left:18px; line-height:1.7; opacity:0.92;">
-                <li>Auto build from Git commit</li>
-                <li>Unit tests + packaging</li>
-                <li>Blue/Green switch on success</li>
-                <li>Rollback if health check fails</li>
-              </ul>
+            <div class="profile__meta">
+              <div class="profile__name">Deshan Herath</div>
+              <div class="profile__role muted">DevOps Engineer • Cloud & Automation</div>
             </div>
-
-            <div style="margin-top:14px; display:flex; gap:10px; flex-wrap:wrap;">
-              <div style="flex:1; min-width:120px; padding:12px; border-radius:18px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.12);">
-                <div style="font-size:12px; opacity:0.8;">Active Port</div>
-                <div style="font-weight:900; font-size:18px;">8087</div>
-              </div>
-              <div style="flex:1; min-width:120px; padding:12px; border-radius:18px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.12);">
-                <div style="font-size:12px; opacity:0.8;">Standby</div>
-                <div style="font-weight:900; font-size:18px;">8086</div>
-              </div>
-            </div>
-
           </div>
-        </div>
 
-      </div>
-    </div>
-  </div>
+          <div class="terminal glass">
+            <div class="terminal__top">
+              <div class="dots" aria-hidden="true">
+                <span></span><span></span><span></span>
+              </div>
+              <span class="terminal__title">deploy@prod • blue/green</span>
+              <span class="terminal__badge">LIVE</span>
+            </div>
 
-  <!-- Pipeline Section -->
-  <div id="pipeline" style="max-width:1100px; margin:22px auto 0; padding:0 18px;">
-    <h2 style="margin:20px 0 10px; font-size:28px;">🚀 CI/CD Pipeline Flow</h2>
-    <p style="margin:0 0 14px; opacity:0.9; line-height:1.7;">
-      A practical pipeline that matches real-world DevOps: from code commit to safe deployment with verification.
-    </p>
+            <pre class="terminal__body" id="terminalText"></pre>
+          </div>
 
-    <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(230px, 1fr)); gap:14px;">
-      <div style="border-radius:18px; padding:16px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.12);">
-        <div style="font-weight:900;">1) Source</div>
-        <div style="margin-top:6px; opacity:0.9; line-height:1.6;">
-          Developers push code to <b>Git</b>. Jenkins checks out the repo using webhook or polling.
-        </div>
-      </div>
-
-      <div style="border-radius:18px; padding:16px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.12);">
-        <div style="font-weight:900;">2) Build</div>
-        <div style="margin-top:6px; opacity:0.9; line-height:1.6;">
-          Maven compiles & packages the app into a <b>JAR</b> (or WAR). Artifacts are produced per commit.
-        </div>
-      </div>
-
-      <div style="border-radius:18px; padding:16px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.12);">
-        <div style="font-weight:900;">3) Test</div>
-        <div style="margin-top:6px; opacity:0.9; line-height:1.6;">
-          Automated tests run. If tests fail, pipeline stops and deployment is blocked.
-        </div>
-      </div>
-
-      <div style="border-radius:18px; padding:16px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.12);">
-        <div style="font-weight:900;">4) Deploy</div>
-        <div style="margin-top:6px; opacity:0.9; line-height:1.6;">
-          Jenkins connects via <b>SSH</b> to the server, uploads the JAR and starts the service.
-        </div>
-      </div>
-
-      <div style="border-radius:18px; padding:16px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.12);">
-        <div style="font-weight:900;">5) Verify</div>
-        <div style="margin-top:6px; opacity:0.9; line-height:1.6;">
-          Health check hits <code style="background:rgba(0,0,0,0.35); padding:2px 6px; border-radius:8px;">/actuator/health</code>
-          to confirm service is running properly.
-        </div>
-      </div>
-
-      <div style="border-radius:18px; padding:16px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.12);">
-        <div style="font-weight:900;">6) Switch</div>
-        <div style="margin-top:6px; opacity:0.9; line-height:1.6;">
-          Nginx routes traffic to the new port. If anything breaks, rollback to the previous port.
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Tools Section -->
-  <div id="tools" style="max-width:1100px; margin:22px auto 0; padding:0 18px;">
-    <h2 style="margin:20px 0 10px; font-size:28px;">🧰 Tools Used</h2>
-    <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(240px, 1fr)); gap:14px;">
-      <div style="border-radius:18px; padding:16px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.12);">
-        <div style="font-weight:900;">Jenkins</div>
-        <div style="margin-top:6px; opacity:0.9; line-height:1.6;">
-          Orchestrates the pipeline stages with builds, tests, and deployments.
-        </div>
-      </div>
-      <div style="border-radius:18px; padding:16px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.12);">
-        <div style="font-weight:900;">Git + GitHub</div>
-        <div style="margin-top:6px; opacity:0.9; line-height:1.6;">
-          Source control. Every commit is a potential release candidate.
-        </div>
-      </div>
-      <div style="border-radius:18px; padding:16px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.12);">
-        <div style="font-weight:900;">Maven</div>
-        <div style="margin-top:6px; opacity:0.9; line-height:1.6;">
-          Build tool to compile, test, and package the Spring Boot application.
-        </div>
-      </div>
-      <div style="border-radius:18px; padding:16px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.12);">
-        <div style="font-weight:900;">Nginx</div>
-        <div style="margin-top:6px; opacity:0.9; line-height:1.6;">
-          Reverse proxy that directs traffic to the active (Blue/Green) port.
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Strategies Section -->
-  <div id="strategies" style="max-width:1100px; margin:22px auto 0; padding:0 18px;">
-    <h2 style="margin:20px 0 10px; font-size:28px;">Blue/Green Deployment Strategy</h2>
-
-    <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:14px;">
-      <div style="border-radius:18px; padding:16px; background:rgba(99,102,241,0.10); border:1px solid rgba(99,102,241,0.25);">
-        <div style="font-weight:900;">Blue/Green</div>
-        <div style="margin-top:6px; opacity:0.95; line-height:1.7;">
-          Run two versions side-by-side: <b>Blue (live)</b> and <b>Green (new)</b>. Deploy to standby, verify,
-          then switch traffic.
-        </div>
-        <div style="margin-top:10px; padding:12px; border-radius:14px; background:rgba(10,16,30,0.55); border:1px solid rgba(255,255,255,0.12);">
-          <div style="font-size:13px; opacity:0.9;">
-				Zero-downtime releases<br/>
-				Fast rollback<br/>
-				Safer deployments
+          <div class="float-cards" aria-hidden="true">
+            <div class="fc glass"><i class="fa-brands fa-jenkins"></i> Jenkins</div>
+            <div class="fc glass"><i class="fa-solid fa-server"></i> Nginx</div>
+            <div class="fc glass"><i class="fa-brands fa-linux"></i> Linux</div>
+            <div class="fc glass"><i class="fa-brands fa-microsoft"></i> Azure</div>
           </div>
         </div>
       </div>
 
-      <div style="border-radius:18px; padding:16px; background:rgba(34,197,94,0.10); border:1px solid rgba(34,197,94,0.25);">
-        <div style="font-weight:900;">Health Checks</div>
-        <div style="margin-top:6px; opacity:0.95; line-height:1.7;">
-          After starting the service, the pipeline verifies it using an endpoint like:
-          <code style="background:rgba(0,0,0,0.35); padding:2px 6px; border-radius:8px;">/actuator/health</code>
+      <a class="scroll-hint" href="#about" aria-label="Scroll to About">
+        <span class="scroll-hint__mouse" aria-hidden="true"></span>
+        <span class="muted">Scroll</span>
+      </a>
+    </section>
+
+    <!-- ABOUT -->
+    <section class="section" id="about">
+      <div class="container">
+        <div class="section__head">
+          <h2 class="section__title">About</h2>
+          <p class="section__subtitle">Production-minded DevOps, built with real constraints — not slides.</p>
         </div>
-        <div style="margin-top:10px; padding:12px; border-radius:14px; background:rgba(10,16,30,0.55); border:1px solid rgba(255,255,255,0.12);">
-          <div style="font-size:13px; opacity:0.9;">
-				Prevents broken releases<br/>
-				Confirms real readiness<br/>
-				Automates rollback trigger
+
+        <div class="about__grid">
+          <div class="about__text glass reveal">
+            <p>
+              I’m a DevOps-focused engineer currently working in a leading bank’s IT operations and core banking environment.
+              I handle production-critical system operations, deployments, monitoring, and end-of-day processes.
+            </p>
+            <p>
+              I’ve built real-world CI/CD with Jenkins (Pipeline-as-Code), shipping Spring Boot releases via SSH to Ubuntu servers,
+              running Blue/Green deployments behind Nginx with health checks and rollback. I’m comfortable with Linux servers,
+              Bash/PowerShell, Tomcat, and core banking systems (Finacle). I’m actively building cloud skills (Azure) and automation practices
+              with a long-term goal of becoming a Cloud Engineer/Architect.
+            </p>
+
+            <div class="about__chips">
+              <span class="chip"><i class="fa-solid fa-check"></i> CI/CD Automation</span>
+              <span class="chip"><i class="fa-solid fa-check"></i> Blue/Green Releases</span>
+              <span class="chip"><i class="fa-solid fa-check"></i> Nginx Ops</span>
+              <span class="chip"><i class="fa-solid fa-check"></i> Banking Production</span>
+            </div>
+          </div>
+
+          <div class="about__cards">
+            <article class="card glass reveal">
+              <h3><i class="fa-solid fa-building-columns"></i> Production Ops in Banking</h3>
+              <p>Hands-on incident handling, monitoring, and stability-first operations in a production-critical environment.</p>
+            </article>
+
+            <article class="card glass reveal">
+              <h3><i class="fa-solid fa-gears"></i> CI/CD Automation</h3>
+              <p>Jenkins Pipeline-as-Code builds, packages, and deploys with predictable, repeatable outcomes.</p>
+            </article>
+
+            <article class="card glass reveal">
+              <h3><i class="fa-solid fa-shuffle"></i> Blue/Green Releases</h3>
+              <p>Near-zero downtime upgrades using port switching, health checks, and safe rollback paths.</p>
+            </article>
+
+            <article class="card glass reveal">
+              <h3><i class="fa-brands fa-microsoft"></i> Cloud Upskilling (Azure)</h3>
+              <p>Building fundamentals, then moving into real architecture patterns and automation at scale.</p>
+            </article>
           </div>
         </div>
       </div>
-    </div>
+    </section>
 
-    <!-- Jenkinsfile Preview (Static) -->
-    <div style="margin-top:14px; border-radius:18px; padding:16px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.12); overflow:auto;">
-      <div style="display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap;">
-        <div style="font-weight:900;">📄 Example Jenkinsfile (Preview)</div>
-        <div style="font-size:12px; opacity:0.8;">(Static display — no JavaScript used)</div>
+    <!-- SKILLS -->
+    <section class="section" id="skills">
+      <div class="container">
+        <div class="section__head">
+          <h2 class="section__title">Skills</h2>
+          <p class="section__subtitle">Grouped by how they’re used in real deployments.</p>
+        </div>
+
+        <div class="skills__grid">
+          <div class="skillbox glass reveal">
+            <div class="skillbox__head">
+              <h3><i class="fa-solid fa-diagram-project"></i> DevOps</h3>
+            </div>
+            <div class="chips">
+              <span class="chip">Jenkins</span>
+              <span class="chip">Pipeline-as-Code</span>
+              <span class="chip">CI/CD</span>
+              <span class="chip">Git</span>
+              <span class="chip">Nginx</span>
+              <span class="chip">Upstream switching</span>
+            </div>
+          </div>
+
+          <div class="skillbox glass reveal">
+            <div class="skillbox__head">
+              <h3><i class="fa-brands fa-linux"></i> Systems</h3>
+            </div>
+            <div class="chips">
+              <span class="chip">Linux (Ubuntu)</span>
+              <span class="chip">systemd</span>
+              <span class="chip">Bash</span>
+              <span class="chip">PowerShell</span>
+              <span class="chip">SSH/SCP</span>
+              <span class="chip">Troubleshooting</span>
+            </div>
+          </div>
+
+          <div class="skillbox glass reveal">
+            <div class="skillbox__head">
+              <h3><i class="fa-solid fa-rocket"></i> App / Deploy</h3>
+            </div>
+            <div class="chips">
+              <span class="chip">Spring Boot (JAR)</span>
+              <span class="chip">Health checks</span>
+              <span class="chip">Tomcat deployments</span>
+              <span class="chip">Rollback</span>
+              <span class="chip">Release folders</span>
+            </div>
+          </div>
+
+          <div class="skillbox glass reveal">
+            <div class="skillbox__head">
+              <h3><i class="fa-brands fa-microsoft"></i> Cloud</h3>
+            </div>
+            <div class="chips">
+              <span class="chip">Azure Fundamentals</span>
+              <span class="chip">Identity basics</span>
+              <span class="chip">Networking basics</span>
+              <span class="chip">Next: IaC + DevOps</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section class="section" id="projects">
+      <div class="container">
+        <div class="section__head">
+          <h2 class="section__title">Projects</h2>
+          <p class="section__subtitle">The work that proves I can ship and operate reliably.</p>
+        </div>
+
+        <div class="projects__grid">
+          <!-- Featured -->
+          <article class="project glass reveal featured">
+            <div class="project__top">
+              <span class="tag"><i class="fa-solid fa-star"></i> Featured</span>
+              <div class="badges">
+                <span class="badge">Jenkins</span>
+                <span class="badge">Nginx</span>
+                <span class="badge">Blue/Green</span>
+                <span class="badge">Spring Boot</span>
+              </div>
+            </div>
+
+            <h3>Jenkins CI/CD Blue/Green Deployment (Spring Boot + Nginx)</h3>
+
+            <ul class="bullets">
+              <li>Jenkins Pipeline-as-Code: build + test + package executable JAR</li>
+              <li>SSH deploy to remote Ubuntu server</li>
+              <li>Blue/Green ports 8086/8087 with automated switch</li>
+              <li>Nginx reverse proxy upstream symlink switching</li>
+              <li>Health checks via <code>/actuator/health</code></li>
+              <li>Rollback on failure + restart-safe systemd services</li>
+              <li>Passwordless sudo for nginx reload (securely configured)</li>
+            </ul>
+
+            <div class="project__actions">
+              <!-- ✅ EDIT HERE: add your real URLs -->
+              <a class="btn btn--sm btn--soft ripple" href="http://192.168.1.5/" target="_blank" rel="noreferrer">
+                <i class="fa-solid fa-globe"></i> Live
+              </a>
+              <a class="btn btn--sm btn--ghost ripple" href="https://github.com/deshan-droid/hello-webapp2" target="_blank" rel="noreferrer">
+                <i class="fa-brands fa-github"></i> Source
+              </a>
+              <button class="btn btn--sm btn--primary ripple" type="button"
+                      data-modal-title="Jenkins CI/CD Blue/Green Deployment (Spring Boot + Nginx)"
+                      data-modal-stack="Jenkins • Maven • Spring Boot • SSH • Ubuntu • systemd • Nginx • Blue/Green"
+                      data-modal-body="
+- Pipeline-as-Code builds and packages an executable Spring Boot JAR.
+- Jenkins ships artifacts to a remote Ubuntu deploy server via SSH/SCP.
+- Blue/Green runs on ports 8086/8087 with automated traffic switching.
+- Nginx upstream symlink switch + reload after health check success.
+- Rollback path keeps the last healthy version live.
+- systemd ensures restart-safe behavior after reboots.
+"
+                      data-modal-shots="Screenshot placeholder 1|Screenshot placeholder 2|Screenshot placeholder 3">
+                <i class="fa-solid fa-circle-info"></i> Details
+              </button>
+            </div>
+          </article>
+
+          <article class="project glass reveal">
+            <div class="project__top">
+              <span class="tag tag--soft">UI/Performance</span>
+              <div class="badges">
+                <span class="badge">HTML</span>
+                <span class="badge">CSS</span>
+                <span class="badge">JS</span>
+              </div>
+            </div>
+
+            <h3>Static DevOps Portfolio Site (This Site)</h3>
+            <p class="muted">Premium dark UI with smooth animations, glass cards, micro-interactions, and lightweight performance.</p>
+
+            <div class="project__actions">
+              <a class="btn btn--sm btn--soft ripple" href="#home">
+                <i class="fa-solid fa-globe"></i> Live
+              </a>
+              <a class="btn btn--sm btn--ghost ripple" href="https://github.com/deshan-droid/hello-webapp">
+                <i class="fa-brands fa-github"></i> Source
+              </a>
+              <button class="btn btn--sm btn--primary ripple" type="button"
+                      data-modal-title="Static DevOps Portfolio Site"
+                      data-modal-stack="HTML • CSS Variables • Flex/Grid • Vanilla JS"
+                      data-modal-body="
+- Mobile-first layout with accessible components.
+- IntersectionObserver reveal animations for premium feel.
+- Theme toggle with localStorage persistence.
+- Modal system for project deep dives.
+- Contact form validation with toast feedback.
+"
+                      data-modal-shots="Homepage hero|Projects section|Contact section">
+                <i class="fa-solid fa-circle-info"></i> Details
+              </button>
+            </div>
+          </article>
+
+          <article class="project glass reveal">
+            <div class="project__top">
+              <span class="tag tag--soft">Ops Toolkit</span>
+              <div class="badges">
+                <span class="badge">Scripts</span>
+                <span class="badge">Logs</span>
+                <span class="badge">Monitoring</span>
+              </div>
+            </div>
+
+            <h3>Monitoring/Operations Toolkit (Frontend Mock)</h3>
+            <p class="muted">Dashboard concept to summarize checks, logs, and alert-style signals for operators.</p>
+
+            <div class="project__actions">
+              <a class="btn btn--sm btn--soft ripple" href="http://192.168.1.5:8086/actuator/health">
+                <i class="fa-solid fa-globe"></i> Live
+              </a>
+              <a class="btn btn--sm btn--ghost ripple" href="https://github.com/deshan-droid/hello-webapp2">
+                <i class="fa-brands fa-github"></i> Source
+              </a>
+              <button class="btn btn--sm btn--primary ripple" type="button"
+                      data-modal-title="Monitoring/Operations Toolkit (Mock)"
+                      data-modal-stack="UI concept • Ops signals • Log summaries • Alert patterns"
+                      data-modal-body="
+- Concept UI for common production checks and quick diagnostics.
+- Sections for uptime, CPU/RAM/disk, and recent incidents.
+- Log filters and status badges for operator speed.
+"
+                      data-modal-shots="Dashboard overview|Signals panel|Log view">
+                <i class="fa-solid fa-circle-info"></i> Details
+              </button>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- EXPERIENCE -->
+    <section class="section" id="experience">
+      <div class="container">
+        <div class="section__head">
+          <h2 class="section__title">Experience</h2>
+          <p class="section__subtitle">Where production habits are earned.</p>
+        </div>
+
+        <div class="exp__grid">
+          <div class="timeline glass reveal" aria-label="Experience timeline">
+            <div class="tl__item">
+              <div class="tl__dot" aria-hidden="true"></div>
+              <div class="tl__content">
+                <h3>System Associate (Bank IT Ops)</h3>
+                <p class="muted">Core ops • deployments • monitoring • EOD • incident handling</p>
+                <ul>
+                  <li>Core system operations, deployments, monitoring, and end-of-day processes.</li>
+                  <li>Worked in production-critical environment with incident handling and recovery.</li>
+                  <li>Finacle operations: SRN deployments, patch deployments, SIT/near-live testing.</li>
+                  <li>Tools: Linux, Bash, PowerShell, MySQL/Toad, Jenkins.</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="tl__item">
+              <div class="tl__dot" aria-hidden="true"></div>
+              <div class="tl__content">
+                <h3>Career Goal</h3>
+                <p class="muted">Moving toward Cloud Engineer → Cloud Architect</p>
+                <p>
+                  Growing cloud fundamentals into real-world architecture and automation workflows (Azure path),
+                  while strengthening operational excellence and deployment reliability.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="goalcard glass reveal">
+            <h3><i class="fa-solid fa-trophy"></i> Achievements</h3>
+            <div class="achievements">
+              <div class="ach glass"><i class="fa-solid fa-check"></i> Built production-style CI/CD pipeline</div>
+              <div class="ach glass"><i class="fa-solid fa-check"></i> Blue/Green release automation</div>
+              <div class="ach glass"><i class="fa-solid fa-check"></i> Hands-on Linux + Nginx operations</div>
+              <div class="ach glass"><i class="fa-solid fa-check"></i> Azure certification journey</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section class="section" id="contact">
+      <div class="container">
+        <div class="section__head">
+          <h2 class="section__title">Contact</h2>
+          <p class="section__subtitle">Let’s build reliable releases together.</p>
+        </div>
+
+        <div class="contact__grid">
+          <div class="contact__cards">
+            <div class="card glass reveal">
+              <h3><i class="fa-solid fa-envelope"></i> Email</h3>
+              <!-- ✅ EDIT HERE: Your email -->
+              <p class="muted">deshanherath07@outlook.com</p>
+            </div>
+            <div class="card glass reveal">
+              <h3><i class="fa-solid fa-location-dot"></i> Location</h3>
+              <p class="muted">Sri Lanka</p>
+            </div>
+            <div class="card glass reveal">
+              <h3><i class="fa-solid fa-link"></i> Profiles</h3>
+              <p class="muted">GitHub • LinkedIn • YouTube • TikTok</p>
+            </div>
+          </div>
+
+          <form class="form glass reveal" id="contactForm" novalidate>
+            <div class="form__row">
+              <label for="name">Name</label>
+              <input id="name" name="name" type="text" placeholder="Your name" autocomplete="name" required />
+              <small class="error" id="errName"></small>
+            </div>
+
+            <div class="form__row">
+              <label for="email">Email</label>
+              <input id="email" name="email" type="email" placeholder="you@example.com" autocomplete="email" required />
+              <small class="error" id="errEmail"></small>
+            </div>
+
+            <div class="form__row">
+              <label for="message">Message</label>
+              <textarea id="message" name="message" placeholder="Tell me what you want to build..." rows="5" required></textarea>
+              <small class="error" id="errMsg"></small>
+            </div>
+
+            <button class="btn btn--primary ripple" type="submit">
+              <i class="fa-solid fa-paper-plane"></i> Send Message
+            </button>
+
+            <p class="form__hint muted">This form uses a demo submit (toast message). We can wire real email later.</p>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+      <div class="container footer__grid">
+        <div>
+          <div class="footer__brand">Deshan Herath</div>
+          <p class="muted">DevOps Engineer • Cloud & Automation Enthusiast</p>
+        </div>
+
+        <div class="footer__links">
+          <a href="#home">Home</a>
+          <a href="#about">About</a>
+          <a href="#projects">Projects</a>
+          <a href="#contact">Contact</a>
+        </div>
+
+        <div class="footer__social">
+          <!-- ✅ EDIT HERE: Replace links -->
+          <a href="#" aria-label="GitHub"><i class="fa-brands fa-github"></i></a>
+          <a href="#" aria-label="LinkedIn"><i class="fa-brands fa-linkedin"></i></a>
+          <a href="#" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
+          <a href="#" aria-label="TikTok"><i class="fa-brands fa-tiktok"></i></a>
+        </div>
       </div>
 
-      <pre style="margin:12px 0 0; white-space:pre; font-size:13px; line-height:1.55; background:rgba(0,0,0,0.35); padding:14px; border-radius:14px; border:1px solid rgba(255,255,255,0.10);">
-pipeline {
-  agent any
-  stages {
-    stage('Checkout') { steps { git 'https://github.com/your-repo.git' } }
-    stage('Build')    { steps { sh 'mvn -B clean package' } }
-    stage('Test')     { steps { sh 'mvn -B test' } }
-    stage('Deploy')   { steps { sh './deploy-blue-green.sh' } }
-    stage('Verify')   { steps { sh 'curl -f http://server:8087/actuator/health' } }
-  }
-}
-      </pre>
+      <div class="container footer__bottom">
+        <p>© <span id="year"></span> Deshan Herath. All rights reserved.</p>
+      </div>
+    </footer>
+  </main>
+
+  <!-- Modal -->
+  <div class="modal" id="modal" aria-hidden="true">
+    <div class="modal__overlay" id="modalOverlay" tabindex="-1"></div>
+    <div class="modal__dialog" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <button class="icon-btn modal__close" id="modalClose" aria-label="Close modal">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+
+      <div class="modal__content">
+        <div class="modal__top">
+          <h3 id="modalTitle"></h3>
+          <p class="muted" id="modalStack"></p>
+        </div>
+
+        <div class="modal__body">
+          <div class="modal__desc" id="modalBody"></div>
+          <div class="modal__shots" id="modalShots"></div>
+        </div>
+
+        <div class="modal__actions">
+          <button class="btn btn--ghost ripple" id="modalOk" type="button">Close</button>
+        </div>
+      </div>
     </div>
   </div>
 
-  <!-- About -->
-  <div id="about" style="max-width:1100px; margin:22px auto; padding:0 18px;">
-    <div style="border-radius:22px; padding:20px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.12);">
-      <h2 style="margin:0 0 10px; font-size:28px;">👤 About This Website</h2>
-      <p style="margin:0; opacity:0.92; line-height:1.8;">
-        This is an HTML-only design that looks like a modern DevOps landing page.
-        If you want, I can also create a second page like <b>pipeline.html</b> and link them together (still HTML only),
-        or make it focused on your exact project (8086/8087 + Nginx + SSH deploy + rollback).
-      </p>
-    </div>
-  </div>
-
-  <!-- Footer -->
-  <div style="margin-top:24px; padding:18px; border-top:1px solid rgba(255,255,255,0.12); background:rgba(10,16,30,0.55);">
-    <div style="max-width:1100px; margin:auto; padding:0 18px; display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px;">
-      <div style="opacity:0.85;">© 2026 CI/CD Pipeline Website • HTML Only</div>
-      <div style="opacity:0.85;">Made for DevOps learning & demo 🚀</div>
-    </div>
-  </div>
-
+  <script src="./script.js"></script>
 </body>
 </html>
