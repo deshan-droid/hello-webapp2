@@ -54,7 +54,7 @@ pipeline {
               echo IMAGE_NAME=${IMAGE_NAME} > ${REMOTE_STACK_DIR}/.env
 
               cd ${REMOTE_STACK_DIR}
-              docker-compose up -d
+              docker compose up -d
 
               sleep 3
               curl -sSf http://localhost/actuator/health > /dev/null
