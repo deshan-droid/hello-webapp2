@@ -86,25 +86,29 @@ docker compose restart nginx
 
 echo \"[8/8] Health checks (retry up to 90s)\"
 # Check containers directly first (bypasses nginx)
-for i in {1..45}; do
+i=1
+while [ "$i" -le 45 ]; do
   if curl -fsS http://localhost:8086/actuator/health >/dev/null 2>&1 \
      && curl -fsS http://localhost:8087/actuator/health >/dev/null 2>&1; then
-    echo \"Backends UP\"
+    echo "Backends UP"
     break
   fi
-  echo \"Waiting for backends... ($i)\"
+  echo "Waiting for backends... ($i)"
   sleep 2
+  i=$((i+1))
 done
 
 # Now check through nginx (this is your real user path)
-for i in {1..45}; do
+i=1
+while [ "$i" -le 45 ]; do
   if curl -fsS http://localhost/actuator/health >/dev/null 2>&1; then
-    echo \"Nginx route OK\"
-    echo \"DEPLOY_OK\"
+    echo "Nginx route OK"
+    echo "DEPLOY_OK"
     exit 0
   fi
-  echo \"Waiting for nginx route... ($i)\"
+  echo "Waiting for nginx route... ($i)"
   sleep 2
+  i=$((i+1))
 done
 
 echo \"--- DEBUG: docker compose ps ---\"
