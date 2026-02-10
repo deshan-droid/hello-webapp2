@@ -1,11 +1,18 @@
 pipeline {
   agent any
 
-  environment {
-    DEPLOY_HOST = "192.168.1.5"
-    DEPLOY_USER = "deploy"
-    DEPLOY_DIR  = "/opt/hello-webapp/releases"
-  }
+environment {
+  DEPLOY_HOST = "20.205.33.17"
+  DEPLOY_USER = "azureuser"
+
+  SSH_CRED_ID = "azure-vm-ssh"
+
+  JAR_NAME = "spring-boot-complete-0.0.1-SNAPSHOT.jar"
+  REMOTE_APP_DIR = "/opt/bluegreen/app"
+  REMOTE_STACK_DIR = "/opt/bluegreen"
+  IMAGE_NAME = "hello-webapp:${BUILD_NUMBER}"
+} 
+    
 
   stages {
 
@@ -25,102 +32,40 @@ pipeline {
       }
     }
 
-    stage('Deploy Blue/Green + Health + Switch') {
-      steps {
-        sh '''
+   stage('Deploy to Azure (Docker Compose)') {
+  steps {
+    sshagent(credentials: [env.SSH_CRED_ID]) {
+      sh '''
+        set -e
+
+        echo "Uploading JAR to Azure..."
+        ssh -o StrictHostKeyChecking=no ${DEPLOY_USER}@${DEPLOY_HOST} "mkdir -p /tmp/jenkins_upload"
+        scp -o StrictHostKeyChecking=no target/${JAR_NAME} ${DEPLOY_USER}@${DEPLOY_HOST}:/tmp/jenkins_upload/${JAR_NAME}
+
+        echo "Building Docker image + restarting stack on Azure..."
+        ssh -o StrictHostKeyChecking=no ${DEPLOY_USER}@${DEPLOY_HOST} "
           set -e
 
-          JAR=$(ls target/*.jar | head -n 1)
-          BASENAME=$(basename "$JAR")
-          echo "Deploying $BASENAME using Blue/Green"
+          sudo mkdir -p ${REMOTE_APP_DIR}
+          sudo chown -R ${DEPLOY_USER}:${DEPLOY_USER} /opt/bluegreen
 
-          # Prepare directories on deploy server
-          ssh -o StrictHostKeyChecking=no ${DEPLOY_USER}@${DEPLOY_HOST} \
-            "mkdir -p ${DEPLOY_DIR} /opt/hello-webapp/logs"
+          mv /tmp/jenkins_upload/${JAR_NAME} ${REMOTE_APP_DIR}/${JAR_NAME}
 
-          # Copy jar to deploy server
-          scp -o StrictHostKeyChecking=no "$JAR" \
-            ${DEPLOY_USER}@${DEPLOY_HOST}:${DEPLOY_DIR}/
+          cd ${REMOTE_APP_DIR}
+          docker build -t ${IMAGE_NAME} .
 
-          # Run blue/green logic ON deploy server
-          ssh -o StrictHostKeyChecking=no ${DEPLOY_USER}@${DEPLOY_HOST} bash -s <<'REMOTE'
-            set -ex
+          echo IMAGE_NAME=${IMAGE_NAME} > ${REMOTE_STACK_DIR}/.env
 
-            DEPLOY_DIR="/opt/hello-webapp/releases"
-            LOG_DIR="/opt/hello-webapp/logs"
+          cd ${REMOTE_STACK_DIR}
+          docker-compose up -d
 
-            UPSTREAM_LINK="/etc/nginx/conf.d/hello_upstream.conf"
-            BLUE_CONF="/etc/nginx/conf.d/upstreams/hello_upstream_blue.conf"
-            GREEN_CONF="/etc/nginx/conf.d/upstreams/hello_upstream_green.conf"
+          sleep 3
+          curl -sSf http://localhost/actuator/health > /dev/null
 
-            BLUE_PORT=8086
-            GREEN_PORT=8087
-
-            ACTIVE_CONF=$(readlink -f "$UPSTREAM_LINK" 2>/dev/null || true)
-            echo "Active upstream file: $ACTIVE_CONF"
-
-            if [ "$ACTIVE_CONF" = "$BLUE_CONF" ]; then
-              ACTIVE_PORT=$BLUE_PORT
-              TARGET_PORT=$GREEN_PORT
-              TARGET_CONF=$GREEN_CONF
-              TARGET_COLOR="GREEN"
-            else
-              ACTIVE_PORT=$GREEN_PORT
-              TARGET_PORT=$BLUE_PORT
-              TARGET_CONF=$BLUE_CONF
-              TARGET_COLOR="BLUE"
-            fi
-
-            echo "Active port: $ACTIVE_PORT"
-            echo "Target port: $TARGET_PORT ($TARGET_COLOR)"
-
-            JAR_PATH=$(ls -t "$DEPLOY_DIR"/*.jar | head -n 1)
-            LOG_FILE="$LOG_DIR/app-$TARGET_PORT.log"
-
-            PID=$(lsof -ti tcp:$TARGET_PORT || true)
-            if [ -n "$PID" ]; then
-              echo "Stopping existing process on $TARGET_PORT (PID $PID)"
-              kill "$PID"
-              sleep 2
-            fi
-
-            echo "Starting new version on $TARGET_PORT"
-            nohup java -jar "$JAR_PATH" \
-              --server.port=$TARGET_PORT \
-              > "$LOG_FILE" 2>&1 &
-
-            echo "Waiting for app to become healthy on $TARGET_PORT..."
-            HEALTH=""
-            for i in $(seq 1 20); do
-              HEALTH=$(curl -s http://127.0.0.1:$TARGET_PORT/actuator/health || true)
-              if echo "$HEALTH" | grep -q '"status":"UP"'; then
-                break
-              fi
-              sleep 2
-            done
-
-            echo "Health response: $HEALTH"
-
-            if echo "$HEALTH" | grep -q '"status":"UP"'; then
-              echo "Health OK ✅ switching traffic to $TARGET_COLOR"
-
-              # SWITCH TRAFFIC (NON-INTERACTIVE SUDO, FULL PATHS)
-              sudo -n /bin/ln -sf "$TARGET_CONF" "$UPSTREAM_LINK"
-              sudo -n /usr/sbin/nginx -t
-              sudo -n /usr/bin/systemctl reload nginx
-
-              echo "Switched traffic to $TARGET_COLOR ($TARGET_PORT)"
-            else
-              echo "Health FAILED ❌ rolling back"
-              NEWPID=$(lsof -ti tcp:$TARGET_PORT || true)
-              if [ -n "$NEWPID" ]; then
-                kill "$NEWPID" || true
-              fi
-              exit 1
-            fi
-REMOTE
-        '''
-      }
+          echo DEPLOY_OK
+        "
+      '''
     }
   }
 }
+
