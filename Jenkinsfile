@@ -54,10 +54,22 @@ pipeline {
               echo IMAGE_NAME=${IMAGE_NAME} > ${REMOTE_STACK_DIR}/.env
 
               cd ${REMOTE_STACK_DIR}
-              docker compose up -d
+             docker compose up -d
+             docker compose restart nginx
 
-              sleep 3
-              curl -sSf http://localhost/actuator/health > /dev/null
+             # wait up to 60s for nginx + app to be ready
+              for i in $(seq 1 30); do
+                 if curl -sSf http://localhost/actuator/health >/dev/null; then
+               echo "HEALTH_OK"
+              break
+             fi
+             echo "Waiting for health... ($i)"
+            sleep 2
+            done
+
+           # final check (will fail the build if still not OK)
+           curl -sSf http://localhost/actuator/health >/dev/null
+
               echo DEPLOY_OK
             "
           '''
