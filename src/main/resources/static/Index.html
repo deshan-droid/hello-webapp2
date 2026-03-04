@@ -1,0 +1,606 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="theme-color" content="#0b0f19" />
+  <meta name="description" content="Deshan Herath — DevOps Engineer | Cloud & Automation Enthusiast" />
+
+  <!-- ✅ EDIT HERE: Title shown on browser tab -->
+  <title>Deshan Herath • DevOps Engineer</title>
+
+  <!-- Google Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome (icons) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+
+<body>
+  <!-- Background decor -->
+  <div class="bg" aria-hidden="true">
+    <div class="bg-blob b1"></div>
+    <div class="bg-blob b2"></div>
+    <div class="bg-grid"></div>
+  </div>
+
+  <!-- Toast -->
+  <div class="toast" id="toast" role="status" aria-live="polite" aria-atomic="true"></div>
+
+  <!-- Scroll-to-top -->
+  <button class="to-top" id="toTop" aria-label="Scroll to top">
+    <i class="fa-solid fa-arrow-up"></i>
+  </button>
+
+  <!-- Header -->
+  <header class="header" id="header">
+    <nav class="nav container" aria-label="Primary navigation">
+      <a class="brand" href="#home" aria-label="Go to Home">
+        <span class="brand__mark" aria-hidden="true">DH</span>
+        <!-- ✅ EDIT HERE: Brand name -->
+        <span class="brand__name">Deshan Herath</span>
+      </a>
+
+      <button class="nav__toggle icon-btn" id="navToggle" type="button" aria-label="Toggle menu" aria-expanded="false">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+
+      <div class="nav__panel" id="navPanel">
+        <div class="nav__links" role="navigation">
+          <a class="nav__link active" href="#home">Home</a>
+          <a class="nav__link" href="#about">About</a>
+          <a class="nav__link" href="#skills">Skills</a>
+          <a class="nav__link" href="#projects">Projects</a>
+          <a class="nav__link" href="#experience">Experience</a>
+          <a class="nav__link" href="#contact">Contact</a>
+        </div>
+
+        <div class="nav__actions">
+          <button class="icon-btn" id="themeToggle" type="button" aria-label="Toggle theme">
+            <i class="fa-solid fa-moon"></i>
+          </button>
+          <a class="btn btn--sm btn--ghost ripple" href="#projects">
+            <i class="fa-solid fa-bolt"></i> View Projects
+          </a>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <!-- HERO -->
+    <section class="section hero" id="home">
+      <div class="container hero__grid">
+        <div class="hero__left">
+          <div class="kicker">
+            <span class="pill"><i class="fa-solid fa-location-dot"></i> Sri Lanka</span>
+            <span class="pill pill--soft"><i class="fa-solid fa-shield-halved"></i> Banking Ops • Production</span>
+          </div>
+
+          <!-- ✅ EDIT HERE: Main heading + headline -->
+          <h1 class="hero__title">Deshan Herath</h1>
+          <p class="hero__headline">DevOps Engineer <span class="muted">|</span> Cloud & Automation Enthusiast</p>
+
+          <p class="hero__intro">
+            I build <span class="accent">reliable CI/CD</span>, automate deployments, and keep production systems stable —
+            with a focus on <span class="accent">zero-downtime releases</span> and clean operations.
+          </p>
+
+          <div class="hero__type" aria-label="Rotating keywords">
+            <span class="muted">Focus:</span>
+            <span class="typewriter" id="typewriter"></span>
+            <span class="type-caret" aria-hidden="true"></span>
+          </div>
+
+          <div class="hero__cta">
+            <a class="btn btn--primary ripple" href="#projects">
+              <i class="fa-solid fa-bolt"></i> View Projects
+            </a>
+
+            <!-- ✅ EDIT HERE: CV -->
+            <a class="btn btn--ghost ripple" href="https://1drv.ms/b/c/064689B258A91146/IQDo9qxq3-W-QbywASiH5_9rAWXYoM7GAMydTGbj5xztOZU?e=Pxv9fh" id="cvBtn">
+              <i class="fa-solid fa-file-arrow-down"></i> Download CV
+            </a>
+
+            <a class="btn btn--soft ripple" href="#contact">
+              <i class="fa-solid fa-paper-plane"></i> Contact
+            </a>
+          </div>
+
+          <!-- ✅ EDIT HERE: Social links -->
+          <div class="social">
+            <a class="social__link" href="https://github.com/deshan-droid" target="_blank" rel="noreferrer" aria-label="GitHub">
+              <i class="fa-brands fa-github"></i>
+            </a>
+            <a class="social__link" href="https://www.linkedin.com/in/deshan-herath-035a7a192/" target="_blank" rel="noreferrer" aria-label="LinkedIn">
+              <i class="fa-brands fa-linkedin"></i>
+            </a>
+            <a class="social__link" href="https://www.youtube.com/@deshbandara" target="_blank" rel="noreferrer" aria-label="YouTube">
+              <i class="fa-brands fa-youtube"></i>
+            </a>
+            <a class="social__link" href="https://www.tiktok.com/@desh.music_?_r=1&_t=ZS-93e4AUqGsVd" target="_blank" rel="noreferrer" aria-label="TikTok">
+              <i class="fa-brands fa-tiktok"></i>
+            </a>
+          </div>
+
+          <div class="hero__stats">
+            <div class="stat glass">
+              <div class="stat__num">Zero-downtime</div>
+              <div class="stat__label">Blue/Green deployments</div>
+            </div>
+            <div class="stat glass">
+              <div class="stat__num">Pipeline-as-Code</div>
+              <div class="stat__label">Jenkins CI/CD</div>
+            </div>
+            <div class="stat glass">
+              <div class="stat__num">Ops-ready</div>
+              <div class="stat__label">Nginx + systemd</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero__right">
+          <!-- Profile Photo -->
+          <div class="profile glass">
+            <div class="profile__img">
+              <img src="/home/deshan/hello-webapp-clean/src/main/resources/static/assets/img/profile.jpeg" alt="Deshan Herath profile photo" />
+            </div>
+            <div class="profile__meta">
+              <div class="profile__name">Deshan Herath</div>
+              <div class="profile__role muted">DevOps Engineer • Cloud & Automation</div>
+            </div>
+          </div>
+
+          <div class="terminal glass">
+            <div class="terminal__top">
+              <div class="dots" aria-hidden="true">
+                <span></span><span></span><span></span>
+              </div>
+              <span class="terminal__title">deploy@prod • blue/green</span>
+              <span class="terminal__badge">LIVE</span>
+            </div>
+
+            <pre class="terminal__body" id="terminalText"></pre>
+          </div>
+
+          <div class="float-cards" aria-hidden="true">
+            <div class="fc glass"><i class="fa-brands fa-jenkins"></i> Jenkins</div>
+            <div class="fc glass"><i class="fa-solid fa-server"></i> Nginx</div>
+            <div class="fc glass"><i class="fa-brands fa-linux"></i> Linux</div>
+            <div class="fc glass"><i class="fa-brands fa-microsoft"></i> Azure</div>
+          </div>
+        </div>
+      </div>
+
+      <a class="scroll-hint" href="#about" aria-label="Scroll to About">
+        <span class="scroll-hint__mouse" aria-hidden="true"></span>
+        <span class="muted">Scroll</span>
+      </a>
+    </section>
+
+    <!-- ABOUT -->
+    <section class="section" id="about">
+      <div class="container">
+        <div class="section__head">
+          <h2 class="section__title">About</h2>
+          <p class="section__subtitle"></p>
+        </div>
+
+        <div class="about__grid">
+          <div class="about__text glass reveal">
+            <p>
+              I work in the IT operations team of a leading bank, supporting core banking systems in a production environment.
+			  My day-to-day work includes system monitoring, deployments, troubleshooting issues, and handling end-of-day processes
+			  to keep services running smoothly.
+            </p>
+            <p>
+              Alongside operations, I’ve been building hands-on DevOps projects. 
+			  I created a CI/CD pipeline using Jenkins (Pipeline-as-Code) that builds a Spring Boot application and deploys 
+			  it to an Ubuntu server. The deployment uses a Blue-Green strategy behind Nginx with health checks and rollback 
+			  capability to reduce downtime.
+            </p>
+			<p>I regularly work with Linux servers, Bash/PowerShell scripting, 
+			and tools like Jenkins, Nginx, and Tomcat, and I also have experience working around Finacle
+			core banking systems. Currently I’m expanding my skills in cloud technologies, especially Azure, 
+			with the goal of growing into a Cloud Engineer and eventually a Cloud Architect.
+			</p>
+
+            <div class="about__chips">
+              <span class="chip"><i class="fa-solid fa-check"></i> CI/CD Automation</span>
+              <span class="chip"><i class="fa-solid fa-check"></i> Blue/Green Releases</span>
+              <span class="chip"><i class="fa-solid fa-check"></i> Nginx Ops</span>
+              <span class="chip"><i class="fa-solid fa-check"></i> Banking Production</span>
+            </div>
+          </div>
+
+          <div class="about__cards">
+            <article class="card glass reveal">
+              <h3><i class="fa-solid fa-building-columns"></i> Production Ops in Banking</h3>
+              <p>Hands-on incident handling, monitoring, and stability-first operations in a production-critical environment.</p>
+            </article>
+
+            <article class="card glass reveal">
+              <h3><i class="fa-solid fa-gears"></i> CI/CD Automation</h3>
+              <p>Jenkins Pipeline-as-Code builds, packages, and deploys with predictable, repeatable outcomes.</p>
+            </article>
+
+            <article class="card glass reveal">
+              <h3><i class="fa-solid fa-shuffle"></i> Blue/Green Releases</h3>
+              <p>Near-zero downtime upgrades using port switching, health checks, and safe rollback paths.</p>
+            </article>
+
+            <article class="card glass reveal">
+              <h3><i class="fa-brands fa-microsoft"></i> Cloud Upskilling (Azure)</h3>
+              <p>Building fundamentals, then moving into real architecture patterns and automation at scale.</p>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SKILLS -->
+    <section class="section" id="skills">
+      <div class="container">
+        <div class="section__head">
+          <h2 class="section__title">Skills</h2>
+          <p class="section__subtitle"></p>
+        </div>
+
+        <div class="skills__grid">
+          <div class="skillbox glass reveal">
+            <div class="skillbox__head">
+              <h3><i class="fa-solid fa-diagram-project"></i> DevOps</h3>
+            </div>
+            <div class="chips">
+              <span class="chip">Jenkins</span>
+              <span class="chip">Pipeline-as-Code</span>
+              <span class="chip">CI/CD</span>
+              <span class="chip">Git</span>
+              <span class="chip">Nginx</span>
+              <span class="chip">Upstream switching</span>
+            </div>
+          </div>
+
+          <div class="skillbox glass reveal">
+            <div class="skillbox__head">
+              <h3><i class="fa-brands fa-linux"></i> Systems</h3>
+            </div>
+            <div class="chips">
+              <span class="chip">Linux (Ubuntu)</span>
+              <span class="chip">systemd</span>
+              <span class="chip">Bash</span>
+              <span class="chip">PowerShell</span>
+              <span class="chip">SSH/SCP</span>
+              <span class="chip">Troubleshooting</span>
+            </div>
+          </div>
+
+          <div class="skillbox glass reveal">
+            <div class="skillbox__head">
+              <h3><i class="fa-solid fa-rocket"></i> App / Deploy</h3>
+            </div>
+            <div class="chips">
+              <span class="chip">Spring Boot (JAR)</span>
+              <span class="chip">Health checks</span>
+              <span class="chip">Tomcat deployments</span>
+              <span class="chip">Rollback</span>
+              <span class="chip">Release folders</span>
+            </div>
+          </div>
+
+          <div class="skillbox glass reveal">
+            <div class="skillbox__head">
+              <h3><i class="fa-brands fa-microsoft"></i> Cloud</h3>
+            </div>
+            <div class="chips">
+              <span class="chip">Azure Fundamentals</span>
+              <span class="chip">Identity basics</span>
+              <span class="chip">Networking basics</span>
+              <span class="chip">Next: IaC + DevOps</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section class="section" id="projects">
+      <div class="container">
+        <div class="section__head">
+          <h2 class="section__title">Projects</h2>
+          <p class="section__subtitle">The work that proves I can ship and operate reliably.</p>
+        </div>
+
+        <div class="projects__grid">
+          <!-- Featured -->
+          <article class="project glass reveal featured">
+            <div class="project__top">
+              <span class="tag"><i class="fa-solid fa-star"></i> Featured</span>
+              <div class="badges">
+                <span class="badge">Jenkins</span>
+                <span class="badge">Nginx</span>
+                <span class="badge">Blue/Green</span>
+                <span class="badge">Spring Boot</span>
+              </div>
+            </div>
+
+            <h3>Jenkins CI/CD Blue/Green Deployment (Spring Boot + Nginx)</h3>
+
+            <!-- ✅ UPDATED bullets to match current Azure Docker deployment -->
+            <ul class="bullets">
+              <li>Jenkins Pipeline-as-Code builds Spring Boot application using Maven</li>
+              <li>Docker image created and deployed to Azure Ubuntu VM</li>
+              <li>Docker containers running as Blue (8086) and Green (8087) environments</li>
+              <li>Nginx reverse proxy routes production traffic through port 80</li>
+              <li>Health validation using <code>/actuator/health</code> endpoint</li>
+              <li>Traffic switching between Blue and Green environments</li>
+              <li>Rollback-ready architecture with parallel environments</li>
+            </ul>
+
+            <div class="project__actions">
+              <!-- ✅ UPDATED: Azure Public IP -->
+              <a class="btn btn--sm btn--soft ripple" href="http://20.205.33.17/" target="_blank" rel="noreferrer">
+                <i class="fa-solid fa-globe"></i> Live
+              </a>
+              <a class="btn btn--sm btn--ghost ripple" href="https://github.com/deshan-droid/hello-webapp2" target="_blank" rel="noreferrer">
+                <i class="fa-brands fa-github"></i> Source
+              </a>
+              <button class="btn btn--sm btn--primary ripple" type="button"
+                      data-modal-title="Jenkins CI/CD Blue/Green Deployment (Spring Boot + Nginx)"
+                      data-modal-stack="Jenkins • Maven • Spring Boot • Docker • Docker Compose • Nginx • Azure Ubuntu • Blue/Green • Health Checks"
+                      data-modal-body="
+- Jenkins Pipeline-as-Code builds the Spring Boot application using Maven.
+- Docker image is created and deployed to an Azure Ubuntu VM.
+- Two environments run simultaneously:
+   Blue container → port 8086
+   Green container → port 8087
+- Nginx reverse proxy listens on port 80 and routes traffic to the active container.
+- Health checks via /actuator/health validate deployment success.
+- Blue/Green strategy allows safe switching and quick rollback.
+"
+                      data-modal-shots="Screenshot placeholder 1|Screenshot placeholder 2|Screenshot placeholder 3">
+                <i class="fa-solid fa-circle-info"></i> Details
+              </button>
+            </div>
+          </article>
+
+          <article class="project glass reveal">
+            <div class="project__top">
+              <span class="tag tag--soft">UI/Performance</span>
+              <div class="badges">
+                <span class="badge">HTML</span>
+                <span class="badge">CSS</span>
+                <span class="badge">JS</span>
+              </div>
+            </div>
+
+            <h3>Static DevOps Portfolio Site (This Site)</h3>
+            <p class="muted">Premium dark UI with smooth animations, glass cards, micro-interactions, and lightweight performance.</p>
+
+            <div class="project__actions">
+              <a class="btn btn--sm btn--soft ripple" href="#home">
+                <i class="fa-solid fa-globe"></i> Live
+              </a>
+              <a class="btn btn--sm btn--ghost ripple" href="https://github.com/deshan-droid/hello-webapp">
+                <i class="fa-brands fa-github"></i> Source
+              </a>
+              <button class="btn btn--sm btn--primary ripple" type="button"
+                      data-modal-title="Static DevOps Portfolio Site"
+                      data-modal-stack="HTML • CSS Variables • Flex/Grid • Vanilla JS"
+                      data-modal-body="
+- Mobile-first layout with accessible components.
+- IntersectionObserver reveal animations for premium feel.
+- Theme toggle with localStorage persistence.
+- Modal system for project deep dives.
+- Contact form validation with toast feedback.
+"
+                      data-modal-shots="Homepage hero|Projects section|Contact section">
+                <i class="fa-solid fa-circle-info"></i> Details
+              </button>
+            </div>
+          </article>
+
+          <article class="project glass reveal">
+            <div class="project__top">
+              <span class="tag tag--soft">Ops Toolkit</span>
+              <div class="badges">
+                <span class="badge">Scripts</span>
+                <span class="badge">Logs</span>
+                <span class="badge">Monitoring</span>
+              </div>
+            </div>
+
+            <h3>Monitoring/Operations Toolkit (Frontend Mock)</h3>
+            <p class="muted">Dashboard concept to summarize checks, logs, and alert-style signals for operators.</p>
+
+            <div class="project__actions">
+              <!-- ✅ UPDATED: public health check via Nginx -->
+              <a class="btn btn--sm btn--soft ripple" href="http://20.205.33.17/actuator/health" target="_blank" rel="noreferrer">
+                <i class="fa-solid fa-globe"></i> Live
+              </a>
+              <a class="btn btn--sm btn--ghost ripple" href="https://github.com/deshan-droid/hello-webapp2">
+                <i class="fa-brands fa-github"></i> Source
+              </a>
+              <button class="btn btn--sm btn--primary ripple" type="button"
+                      data-modal-title="Monitoring/Operations Toolkit (Mock)"
+                      data-modal-stack="UI concept • Ops signals • Log summaries • Alert patterns"
+                      data-modal-body="
+- Concept UI for common production checks and quick diagnostics.
+- Sections for uptime, CPU/RAM/disk, and recent incidents.
+- Log filters and status badges for operator speed.
+"
+                      data-modal-shots="Dashboard overview|Signals panel|Log view">
+                <i class="fa-solid fa-circle-info"></i> Details
+              </button>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- EXPERIENCE -->
+    <section class="section" id="experience">
+      <div class="container">
+        <div class="section__head">
+          <h2 class="section__title">Experience</h2>
+          <p class="section__subtitle">Where production habits are earned.</p>
+        </div>
+
+        <div class="exp__grid">
+          <div class="timeline glass reveal" aria-label="Experience timeline">
+            <div class="tl__item">
+              <div class="tl__dot" aria-hidden="true"></div>
+              <div class="tl__content">
+                <h3>System Associate (Bank IT Ops)</h3>
+                <p class="muted">Core ops • deployments • monitoring • EOD • incident handling</p>
+                <ul>
+                  <li>Core system operations, deployments, monitoring, and end-of-day processes.</li>
+                  <li>Worked in production-critical environment with incident handling and recovery.</li>
+                  <li>Finacle operations: SRN deployments, patch deployments, SIT/near-live testing.</li>
+                  <li>Tools: Linux, Bash, PowerShell, MySQL/Toad, Jenkins.</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="tl__item">
+              <div class="tl__dot" aria-hidden="true"></div>
+              <div class="tl__content">
+                <h3>Career Goal</h3>
+                <p class="muted">Moving toward Cloud Engineer → Cloud Architect</p>
+                <p>
+                  Growing cloud fundamentals into real-world architecture and automation workflows (Azure path),
+                  while strengthening operational excellence and deployment reliability.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="goalcard glass reveal">
+            <h3><i class="fa-solid fa-trophy"></i> Achievements</h3>
+            <div class="achievements">
+              <div class="ach glass"><i class="fa-solid fa-check"></i> Built production-style CI/CD pipeline</div>
+              <div class="ach glass"><i class="fa-solid fa-check"></i> Blue/Green release automation</div>
+              <div class="ach glass"><i class="fa-solid fa-check"></i> Hands-on Linux + Nginx operations</div>
+              <div class="ach glass"><i class="fa-solid fa-check"></i> Azure certification journey</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section class="section" id="contact">
+      <div class="container">
+        <div class="section__head">
+          <h2 class="section__title">Contact</h2>
+          <p class="section__subtitle">Let’s build reliable releases together.</p>
+        </div>
+
+        <div class="contact__grid">
+          <div class="contact__cards">
+            <div class="card glass reveal">
+              <h3><i class="fa-solid fa-envelope"></i> Email</h3>
+              <p class="muted">deshanherath07@outlook.com</p>
+            </div>
+            <div class="card glass reveal">
+              <h3><i class="fa-solid fa-location-dot"></i> Location</h3>
+              <p class="muted">Sri Lanka</p>
+            </div>
+            <div class="card glass reveal">
+              <h3><i class="fa-solid fa-link"></i> Profiles</h3>
+              <p class="muted">GitHub • LinkedIn • YouTube • TikTok</p>
+            </div>
+          </div>
+
+          <form class="form glass reveal" id="contactForm" novalidate>
+            <div class="form__row">
+              <label for="name">Name</label>
+              <input id="name" name="name" type="text" placeholder="Your name" autocomplete="name" required />
+              <small class="error" id="errName"></small>
+            </div>
+
+            <div class="form__row">
+              <label for="email">Email</label>
+              <input id="email" name="email" type="email" placeholder="you@example.com" autocomplete="email" required />
+              <small class="error" id="errEmail"></small>
+            </div>
+
+            <div class="form__row">
+              <label for="message">Message</label>
+              <textarea id="message" name="message" placeholder="Tell me what you want to build..." rows="5" required></textarea>
+              <small class="error" id="errMsg"></small>
+            </div>
+
+            <button class="btn btn--primary ripple" type="submit">
+              <i class="fa-solid fa-paper-plane"></i> Send Message
+            </button>
+
+            <p class="form__hint muted">This is a demo site.</p>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+      <div class="container footer__grid">
+        <div>
+          <div class="footer__brand">Deshan Herath</div>
+          <p class="muted">DevOps Engineer • Cloud & Automation Enthusiast</p>
+        </div>
+
+        <div class="footer__links">
+          <a href="#home">Home</a>
+          <a href="#about">About</a>
+          <a href="#projects">Projects</a>
+          <a href="#contact">Contact</a>
+        </div>
+
+        <div class="footer__social">
+          <a href="#" aria-label="GitHub"><i class="fa-brands fa-github"></i></a>
+          <a href="#" aria-label="LinkedIn"><i class="fa-brands fa-linkedin"></i></a>
+          <a href="#" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
+          <a href="#" aria-label="TikTok"><i class="fa-brands fa-tiktok"></i></a>
+        </div>
+      </div>
+
+      <div class="container footer__bottom">
+        <p>© <span id="year"></span> Deshan Herath. All rights reserved.</p>
+      </div>
+    </footer>
+  </main>
+
+  <!-- Modal -->
+  <div class="modal" id="modal" aria-hidden="true">
+    <div class="modal__overlay" id="modalOverlay" tabindex="-1"></div>
+    <div class="modal__dialog" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <button class="icon-btn modal__close" id="modalClose" aria-label="Close modal">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+
+      <div class="modal__content">
+        <div class="modal__top">
+          <h3 id="modalTitle"></h3>
+          <p class="muted" id="modalStack"></p>
+        </div>
+
+        <div class="modal__body">
+          <div class="modal__desc" id="modalBody"></div>
+          <div class="modal__shots" id="modalShots"></div>
+        </div>
+
+        <div class="modal__actions">
+          <button class="btn btn--ghost ripple" id="modalOk" type="button">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="./script.js"></script>
+</body>
+</html>
